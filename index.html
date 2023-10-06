@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>입력 받기</title>
+</head>
+<body>
+    <input type="text" id="mutong" placeholder="무통 억당 가격"><br>
+    <input type="text" id="market" placeholder="메소마켓 억당 가격"><br>
+    <input type="text" id="susu" placeholder="수수료 비율 (%)"><br>
+    <input type="text" id="halin" placeholder="넥슨카드 할인율 (%)"><br>
+    <input type="text" id="money" placeholder="결제 금액 (원)"><br>
+    <button onclick="calculate()">계산</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            const mutong = parseInt(document.getElementById("mutong").value);
+            const market = parseInt(document.getElementById("market").value);
+            const susu = parseInt(document.getElementById("susu").value);
+            const halin = parseInt(document.getElementById("halin").value);
+            const money = parseInt(document.getElementById("money").value);
+
+            const mt_cha = money % mutong;
+            const mk_cha = money % market;
+            const mt_uk = Math.floor(money / mutong);
+
+            const mt_total = mt_uk * (1 - 0.01 * susu);
+            const mk_total = Math.floor(money / market);
+
+            const mt_per = (money - mt_cha) / mt_total;
+            const mk_per = (money * (1 - 0.01 * halin) - mk_cha) / mk_total;
+
+            const result = `
+                무통 획득 금액 : ${mt_total}<br>
+                메마 획득 금액 : ${mk_total}<br>
+                무통 1억당 : ${mt_per}<br>
+                메마 1억당 : ${mk_per}
+            `;
+
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+</body>
+</html>
